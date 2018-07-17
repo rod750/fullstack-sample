@@ -1,0 +1,23 @@
+<md-dialog aria-label="Crear catálogo">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Crear catálogo</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon aria-label="Cerrar">close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <md-input-container>
+        <label>Nombre</label>
+        <input md-autofocus ng-model="catalog.name">
+      </md-input-container>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+    <md-button ng-click="submit()" class="md-primary">Crear</md-button>
+  </md-dialog-actions>
+</md-dialog>

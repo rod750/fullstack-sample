@@ -1,0 +1,24 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2 md-truncate flex>Catálogos de servicios</h2>
+
+    <md-button ng-click="openCreate()">
+      Nuevo catálogo
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content layout-padding flex>
+  <md-list>
+    <md-list-item ng-repeat="catalog in catalogs">
+      <md-icon>folder</md-icon>
+      <p>{{catalog.name}}</p>
+      <md-button class="md-icon-button" ng-click="openUpdate($index)">
+        <md-icon aria-label="Editar catálogo">edit</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-click="delete($index)">
+        <md-icon aria-label="Eliminar catálogo">delete</md-icon>
+      </md-button>
+    </md-list-item>
+  </md-list>
+</md-content>
