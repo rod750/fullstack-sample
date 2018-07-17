@@ -1,23 +1,27 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
-    <h2 md-truncate flex>Catálogos de servicios</h2>
+    <md-button class="md-icon-button" ng-click="goBack()" aria-label="Atrás">
+      <md-icon>arrow_back</md-icon>
+    </md-button>
+
+    <h2 md-truncate flex>Areas</h2>
 
     <md-button ng-click="openCreate()">
-      Nuevo catálogo
+      Nueva área
     </md-button>
   </div>
 </md-toolbar>
 
 <md-content layout-padding flex>
   <md-list>
-    <md-list-item ng-repeat="catalog in catalogs" ng-click="viewAreas(catalog, $event)">
+    <md-list-item ng-repeat="area in areas" ng-click="viewItems(area, $event)">
       <md-icon>folder</md-icon>
-      <p>{{catalog.name}}</p>
+      <p>{{area.name}}</p>
       <md-button class="md-icon-button" ng-click="openUpdate($index, $event)">
-        <md-icon aria-label="Editar catálogo">edit</md-icon>
+        <md-icon aria-label="Editar área">edit</md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="delete($index, $event)">
-        <md-icon aria-label="Eliminar catálogo">delete</md-icon>
+        <md-icon aria-label="Eliminar área">delete</md-icon>
       </md-button>
     </md-list-item>
   </md-list>

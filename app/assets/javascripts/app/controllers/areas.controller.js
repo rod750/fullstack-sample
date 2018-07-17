@@ -1,12 +1,13 @@
-app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "CatalogService", function($scope, $mdDialog, $location, CatalogService)
+app.controller("AreasController", ["$scope", "$mdDialog", "$routeParams", "$location", "AreaService", function($scope, $mdDialog, $routeParams, $location, AreaService)
 {
-  $scope.catalogs = [];
+  $scope.areas = [];
 
   $scope.loadData = function()
   {
-    CatalogService.fetchAll().then(function(catalogs)
+    AreaService.setCatalogId($routeParams.catalogId);
+    AreaService.fetchAll().then(function(areas)
     {
-      $scope.catalogs = catalogs;
+      $scope.areas = areas;
     },
     function(error)
     {
@@ -16,24 +17,29 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
 
   $scope.loadData();
 
-  $scope.viewAreas = function(catalog)
+  $scope.goBack = function()
   {
-    $location.url("/catalogs/"+catalog.id+"/areas");
+    $location.url("/catalogs");
+  };
+
+  $scope.viewItems = function(area)
+  {
+    $location.url("/catalogs/"+AreaService.catalogId+"/areas/"+area.id+"/items");
   };
 
   $scope.openCreate = function(e)
   {
     $mdDialog.show(
     {
-      controller: CreateCatalogController,
-      templateUrl: "../templates/create-catalog.template.html",
+      controller: CreateAreaController,
+      templateUrl: "../templates/create-area.template.html",
       parent: angular.element(document.body),
       targetEvent: e,
       clickOutsideToClose: true
     })
-    .then(function(catalog)
+    .then(function(areas)
     {
-      $scope.catalogs.unshift(catalog);
+      $scope.areas.unshift(area);
     },
     function()
     {
@@ -45,23 +51,24 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
   {
     e.preventDefault();
     e.stopPropagation();
-    var catalog = angular.copy($scope.catalogs[index]);
+
+    var area = angular.copy($scope.areas[index]);
 
     $mdDialog.show(
     {
-      controller: UpdateCatalogController,
-      templateUrl: "../templates/update-catalog.template.html",
+      controller: UpdateAreaController,
+      templateUrl: "../templates/update-area.template.html",
       parent: angular.element(document.body),
-      clickOutsideToClose: true,
       targetEvent: e,
+      clickOutsideToClose: true,
       locals:
       {
-        catalog: catalog
+        area: area
       }
     })
-    .then(function(catalog)
+    .then(function(area)
     {
-      $scope.catalogs[index] = catalog;
+      $scope.areas[index] = area;
     },
     function()
     {
@@ -74,21 +81,22 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
     e.preventDefault();
     e.stopPropagation();
 
-    var catalog = angular.copy($scope.catalogs[index]);
+    var area = angular.copy($scope.areas[index]);
 
     var confirm = $mdDialog.confirm()
       .title("¿Quieres eliminar este catálogo?")
       .textContent("Esta acción es irreversible.")
       .ariaLabel("Eliminar catálogo")
+      .targetEvent(e)
       .ok("Eliminar")
       .cancel("Cancelar")
 
     $mdDialog.show(confirm).then(function()
     {
-      CatalogService.delete(catalog)
+      AreaService.delete(area)
         .then(function(response)
         {
-          $scope.catalogs.splice(index, 1);
+          $scope.areas.splice(index, 1);
         },
         function(error)
         {
@@ -101,9 +109,9 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
     });
   };
 
-  function CreateCatalogController($scope, $mdDialog, CatalogService)
+  function CreateAreaController($scope, $mdDialog, AreaService)
   {
-    $scope.catalog = {};
+    $scope.area = {};
 
     $scope.cancel = function()
     {
@@ -112,10 +120,10 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
 
     $scope.submit = function()
     {
-      CatalogService.create($scope.catalog)
-        .then(function(catalog)
+      AreaService.create($scope.area)
+        .then(function(area)
         {
-          $mdDialog.hide(catalog);
+          $mdDialog.hide(area);
         },
         function(error)
         {
@@ -124,9 +132,9 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
     };
   }
 
-  function UpdateCatalogController($scope, $mdDialog, CatalogService, catalog)
+  function UpdateAreaController($scope, $mdDialog, CatalogService, area)
   {
-    $scope.catalog = catalog;
+    $scope.area = area;
 
     $scope.cancel = function()
     {
@@ -135,10 +143,10 @@ app.controller("CatalogsController", ["$scope", "$mdDialog", "$location", "Catal
 
     $scope.submit = function()
     {
-      CatalogService.update($scope.catalog)
-        .then(function(catalog)
+      AreaService.update($scope.area)
+        .then(function(area)
         {
-          $mdDialog.hide(catalog);
+          $mdDialog.hide(area);
         },
         function(error)
         {
