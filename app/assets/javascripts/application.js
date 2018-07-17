@@ -14,4 +14,8 @@
 //= require activestorage
 //= require turbolinks
 //= require angular
-//= require_tree .
+//= require angular-animate
+//= require angular-aria
+//= require angular-route
+//= require angular-material
+//= require "app/app.module.js"
