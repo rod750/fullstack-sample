@@ -21,6 +21,8 @@
 //= require "app/app.module.js"
 //= require "app/services/catalog.service.js"
 //= require "app/services/area.service.js"
+//= require "app/services/item.service.js"
 //= require "app/controllers/catalogs.controller.js"
 //= require "app/controllers/areas.controller.js"
+//= require "app/controllers/items.controller.js"
 //= require "app/app.routes.js"

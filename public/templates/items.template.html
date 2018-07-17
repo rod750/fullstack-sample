@@ -1,0 +1,28 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" ng-click="goBack()" aria-label="Atrás">
+      <md-icon>arrow_back</md-icon>
+    </md-button>
+
+    <h2 md-truncate flex>Items</h2>
+
+    <md-button ng-click="openCreate()">
+      Nuevo item
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content layout-padding flex>
+  <md-list>
+    <md-list-item ng-repeat="item in items">
+      <md-icon>assignment</md-icon>
+      <p>{{item.name}}</p>
+      <md-button class="md-icon-button" ng-click="openUpdate($index)">
+        <md-icon aria-label="Editar área">edit</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-click="delete($index)">
+        <md-icon aria-label="Eliminar área">delete</md-icon>
+      </md-button>
+    </md-list-item>
+  </md-list>
+</md-content>
